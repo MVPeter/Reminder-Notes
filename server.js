@@ -8,11 +8,14 @@ const PORT = 3033;
 
 
 var app = express();
-const notes = require('./db/db.json');
+const savedNotes = require('./db/db.json');
+app.use(express.static("public"))
+app.use(express.json())
+
 var noteID = 0;
 
 
-app.use(express.static("public"))
+
 app.get("/", function (req, res) {
     res.sendFile(path.join(__dirname, "./public/index.html"));
 });
@@ -22,24 +25,30 @@ app.get("/notes", (req, res) => {
 });
 
 app.get("/api/notes", (req, res) => {
-    res.json(notes);
+    res.json(savedNotes);
 });
 
 app.delete("/api/notes/:id", (req, res) => {
  let returnedID = req.params.id
- console.table(notes)
- for (let i = 0; i < notes.length; i++) {
-     if (returnedID == notes[i].id){
-         notes[i] = {}
+ console.table(savedNotes)
+ for (let i = 0; i < savedNotes.length; i++) {
+     if (returnedID == savedNotes[i].id){
+         savedNotes.splice(i, 1);
      }
      
  }
- console.log(notes)
-     //write call to make a delete
+ console.log(savedNotes)
+ res.send("ok");    
 })
 
 app.post('/api/notes', (req, res) => {
-    notes.push(req.notes)
+    let returnNote = req.body;
+    noteID = noteID + 1;
+    returnNote.id = noteID;
+    
+    savedNotes.push(returnNote);
+    console.log(returnNote);
+    res.send("ok");
 })
 
 app.listen(PORT, function () {
