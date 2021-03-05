@@ -1,7 +1,7 @@
 const express = require("express");
 const fs = require("fs");
 const path = require("path");
-const PORT = 3033;
+const PORT = process.env.PORT || 3033;
 
 const app = express();
 const savedNotes = require('./db/db.json');
@@ -49,18 +49,19 @@ app.delete("/api/notes/:id", (req, res) => {
     res.send("ok");
 })
 
+
 //POST API route
 app.post('/api/notes', (req, res) => {
     let returnNote = req.body;
-    for (let i = 0; i < savedNotes.length; i++) {
-        if (savedNotes[i].id != i) {
+  
+    for (let i = noteID; i < savedNotes.length; i++) {
+        if (i !== savedNotes[i].id) {
             noteID = i
         }
     };
     returnNote.id = noteID;
     savedNotes.push(returnNote);
-
-    // console.log(returnNote);
+    
     console.table(savedNotes);
 
     const jsonSavedNotes = JSON.stringify(savedNotes);
