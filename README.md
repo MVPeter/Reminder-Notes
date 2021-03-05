@@ -19,7 +19,7 @@
 
   This project uses Express to start a webserver and creates a website you can create, save, and delete notes.  The notes will save to a JSON file and be retrieved when the server reloads.
 
-  ![ScreenShot](./public/assets/screenshot.png)
+  ![ScreenShot](./public/assets/screenshot/screenshot.png)
 
   ---
   
@@ -31,7 +31,7 @@
   
   ### Usage
 
-    * The application runs in node and can be started with ‘node server.js’.
+    * The application runs at a terminal, in node and can be started with ‘node server.js’.
 
   ---
   
